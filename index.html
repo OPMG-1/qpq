@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>운세 뽑기</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+    }
+    h1 {
+      font-size: 36px;
+      color: #444;
+      margin-top: 30px;
+    }
+    .box-container {
+      position: relative;
+      width: 250px; /* 사진 크기 */
+      height: 250px;
+      margin: 0 auto;
+      border-radius: 15px;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      padding: 10px;
+      margin-top: 50px;
+    }
+    .box {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s;
+    }
+    .box.shake {
+      animation: shake 0.5s, jump 0.3s 0.5s; /* 점프 효과가 흔들기 뒤에 실행되도록 */
+    }
+    @keyframes shake {
+      0% { transform: rotate(-5deg); }
+      25% { transform: rotate(5deg); }
+      50% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+      100% { transform: rotate(0); }
+    }
+    @keyframes jump {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); } /* 위로 올라갔다가 */
+      100% { transform: translateY(0); } /* 다시 원위치 */
+    }
+    .result {
+      display: none;
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-top: 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      margin: 20px auto;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>운세 뽑기</h1>
+  <div class="box-container">
+    <img src="gacha-box.png" alt="뽑기통" class="box" id="gachaBox">
+  </div>
+  <button onclick="drawFortune()">뽑기</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const fortunes = [
+      "대길 - 오늘 하루 행운이 가득할 거예요!",
+      "중길 - 평온한 하루를 보내세요.",
+      "소길 - 작은 기쁨이 당신을 기다립니다.",
+      "흉 - 조금 조심하는 하루가 되세요.",
+      "대흉 - 차분히, 긍정적으로 하루를 보내세요!"
+    ];
+
+    function drawFortune() {
+      const box = document.getElementById('gachaBox');
+      const resultDiv = document.getElementById('result');
+
+      // 기존 결과 숨기기
+      resultDiv.style.display = 'none';
+
+      // 뽑기통 흔들기 애니메이션 추가
+      box.classList.add('shake');
+
+      // 0.5초 후 애니메이션 제거 및 결과 표시
+      setTimeout(() => {
+        box.classList.remove('shake');
+        const randomIndex = Math.floor(Math.random() * fortunes.length);
+        resultDiv.textContent = fortunes[randomIndex];
+        resultDiv.style.display = 'block';
+      }, 800); // 흔들기 + 점프 효과 시간과 동일
+    }
+  </script>
+</body>
+</html>
